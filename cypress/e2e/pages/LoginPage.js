@@ -1,5 +1,3 @@
-// cypress/support/pages/loginPage.js
-
 export class LoginPage {
   visit() {
     cy.visit("https://www.saucedemo.com/");
@@ -11,6 +9,38 @@ export class LoginPage {
       cy.get('[data-test="password"]').type(user.standard_user.password);
       cy.get('[data-test="login-button"]').click();
       cy.url().should("include", "/inventory.html");
+    });
+  }
+
+    loginAsLockedOutUser() {
+    cy.fixture("user.json").then((user) => {
+      cy.get('[data-test="username"]').type(user.locked_out_user.username);
+      cy.get('[data-test="password"]').type(user.locked_out_user.password);
+      cy.get('[data-test="login-button"]').click();
+    });
+  }
+
+    loginAsWrongPassword() {
+    cy.fixture("user.json").then((user) => {
+      cy.get('[data-test="username"]').type(user.problem_user.username);
+      cy.get('[data-test="password"]').type("wrong_password");
+      cy.get('[data-test="login-button"]').click();
+    });
+  }
+
+  loginAsNullUsername() {
+    cy.fixture("user.json").then((user) => {
+      cy.get('[data-test="username"]').clear();
+      cy.get('[data-test="password"]').type("wrong_password");
+      cy.get('[data-test="login-button"]').click();
+    });
+  }
+
+    loginAsNullPassword() {
+    cy.fixture("user.json").then((user) => {
+      cy.get('[data-test="username"]').type(user.problem_user.username);
+      cy.get('[data-test="password"]').clear();
+      cy.get('[data-test="login-button"]').click();
     });
   }
 }

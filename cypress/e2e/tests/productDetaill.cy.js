@@ -6,12 +6,11 @@ import { InventoryPage } from "../pages/InventoryPage";
 const loginPage = new LoginPage();
 const inventoryPage = new InventoryPage();
 
-describe("Test detail products", () => {
+describe("TC_006 Product Browse & Interaction", () => {
   beforeEach(() => {
     loginPage.visit();
     loginPage.loginAsStandardUser();
   });
-
   it("Check Detail Sauce Labs Backpack", () => {
     cy.fixture("products.json").then((items) => {
       const backpack = items.find(item => item.name === "Sauce Labs Backpack");
@@ -82,7 +81,7 @@ describe("Test detail products", () => {
     });
   });
 
-    it.only("Check Detail Test.allTheThings() T-Shirt (Red)", () => {
+    it("Check Detail Test.allTheThings() T-Shirt (Red)", () => {
     cy.fixture("products.json").then((items) => {
       const tShirt = items.find(item => item.name === "Test.allTheThings() T-Shirt (Red)");
 
