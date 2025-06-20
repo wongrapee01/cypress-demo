@@ -54,3 +54,22 @@ export class MultipleProduct {
     return name.toLowerCase().replace(/[()]/g, "").replaceAll(" ", "-");
   }
 }
+
+export class CartDetail {
+  clickIconCard() {
+    cy.get('[data-test="shopping-cart-link"]').click();
+    cy.url().should("include", "/cart.html");
+  }
+
+  verifyProductsInCart(productNames = []) {
+    cy.get(".cart_item").should("have.length", productNames.length);
+
+    productNames.forEach((name, index) => {
+      cy.get(".cart_item")
+        .eq(index)
+        .within(() => {
+          cy.get(".inventory_item_name").should("contain", name);
+        });
+    });
+  }
+}
