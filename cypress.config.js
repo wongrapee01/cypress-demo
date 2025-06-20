@@ -7,5 +7,9 @@ module.exports = defineConfig({
       // ...
     },
     chromeWebSecurity: false,
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
   },
 });

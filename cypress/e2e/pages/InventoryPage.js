@@ -1,7 +1,7 @@
 // cypress/support/pages/InventoryPage.js
 export class InventoryPage {
   // Verify product names, descriptions, and prices
-    verifyProductNames(products) {
+  verifyProductNames(products) {
     cy.get('[data-test="inventory-item-name"]').each(($el, index) => {
       expect($el.text().trim()).to.eq(products[index].name);
     });
@@ -19,7 +19,7 @@ export class InventoryPage {
     });
   }
 
-// Click on a product by its test ID and verify its name
+  // Click on a product by its test ID and verify its name
   clickProductByTestId(testId, name) {
     cy.get(`[data-test="${testId}"] > [data-test="inventory-item-name"]`)
       .should("contain", name)
@@ -42,10 +42,19 @@ export class InventoryPage {
     cy.get(`[data-test="${testId}"]`).should("be.visible");
   }
 
-  addToCart() {
-    cy.get('[data-test="add-to-cart"]').click();
-    cy.get('[data-test="remove"]').should("contain", "Remove");
-    cy.get('[data-test="shopping-cart-badge"]').should("contain", "1");
+  // addToCart() {
+  //   cy.get('[data-test="add-to-cart"]').click();
+  //   cy.get('[data-test="remove"]').should("contain", "Remove");
+  //   cy.get('[data-test="shopping-cart-badge"]').should("contain", "1");
+  // }
+
+  addToCart(quantity = 1) {
+    for (let i = 0; i < quantity; i++) {
+      cy.get('[data-test="add-to-cart"]').eq(i).click(); // ใช้ .eq(i) หากมีหลายปุ่ม
+    }
+    cy.get('[data-test="remove"]').should("have.length", quantity);
+    // ตรวจสอบว่า badge แสดงจำนวนถูกต้อง
+    cy.get('[data-test="shopping-cart-badge"]').should("contain", quantity);
   }
 
   removeFromCart() {

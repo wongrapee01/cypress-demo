@@ -12,7 +12,7 @@ export class LoginPage {
     });
   }
 
-    loginAsLockedOutUser() {
+  loginAsLockedOutUser() {
     cy.fixture("user.json").then((user) => {
       cy.get('[data-test="username"]').type(user.locked_out_user.username);
       cy.get('[data-test="password"]').type(user.locked_out_user.password);
@@ -20,7 +20,7 @@ export class LoginPage {
     });
   }
 
-    loginAsWrongPassword() {
+  loginAsWrongPassword() {
     cy.fixture("user.json").then((user) => {
       cy.get('[data-test="username"]').type(user.problem_user.username);
       cy.get('[data-test="password"]').type("wrong_password");
@@ -36,10 +36,18 @@ export class LoginPage {
     });
   }
 
-    loginAsNullPassword() {
+  loginAsNullPassword() {
     cy.fixture("user.json").then((user) => {
       cy.get('[data-test="username"]').type(user.problem_user.username);
       cy.get('[data-test="password"]').clear();
+      cy.get('[data-test="login-button"]').click();
+    });
+  }
+
+  loginAsErrorUser() {
+    cy.fixture("user.json").then((user) => {
+      cy.get('[data-test="username"]').type(user.error_user.username);
+      cy.get('[data-test="password"]').type(user.error_user.password);
       cy.get('[data-test="login-button"]').click();
     });
   }
@@ -65,6 +73,16 @@ export class SortProducts {
   verifyProductPricesSorted(expectedList) {
     cy.get('[data-test="inventory-item-price"]').each(($el, index) => {
       expect($el.text().trim()).to.eq(expectedList[index].price);
+    });
+  }
+
+  verifyAllSortedByPrice(expectedItems) {
+    cy.get('[data-test="inventory-item-price"]').each(($el, index) => {
+      const actualPrice = parseFloat($el.text().replace("$", ""));
+      const expectedPrice = parseFloat(
+        expectedItems[index].price.replace("$", "")
+      );
+      expect(actualPrice).to.eq(expectedPrice);
     });
   }
 

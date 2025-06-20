@@ -2,7 +2,6 @@
 import { LoginPage, SortProducts } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
 
-
 const loginPage = new LoginPage();
 const sortProducts = new SortProducts();
 const inventoryPage = new InventoryPage();
@@ -54,8 +53,6 @@ describe("Login Functionality", () => {
   });
 });
 
-
-
 describe("Product Browse & Interaction", () => {
   beforeEach(() => {
     loginPage.visit();
@@ -82,5 +79,30 @@ describe("Product Browse & Interaction", () => {
       sortProducts.verifyAllSorted(sortedByName);
     });
   });
-});
 
+  it("TC_009 Sort Price: Low to High", () => {
+    cy.fixture("products.json").then((items) => {
+      const sortedByPrice = [...items].sort((a, b) => {
+        const priceA = parseFloat(a.price.replace("$", ""));
+        const priceB = parseFloat(b.price.replace("$", ""));
+        return priceA - priceB;
+      });
+
+      sortProducts.selectSortOption("lohi");
+      sortProducts.verifyAllSortedByPrice(sortedByPrice);
+    });
+  });
+
+  it("TC_010 Sort Price: High to low", () => {
+    cy.fixture("products.json").then((items) => {
+      const sortedByPrice = [...items].sort((a, b) => {
+        const priceA = parseFloat(a.price.replace("$", ""));
+        const priceB = parseFloat(b.price.replace("$", ""));
+        return priceB - priceA;
+      });
+
+      sortProducts.selectSortOption("hilo");
+      sortProducts.verifyAllSortedByPrice(sortedByPrice);
+    });
+  });
+});
