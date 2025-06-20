@@ -9,7 +9,6 @@ export class MultipleProduct {
       "contain",
       "Remove"
     );
-    cy.get('[data-test="add-to-cart-sauce-labs-backpack"]');
   }
 
   // ➖ ลบสินค้าจากชื่อ

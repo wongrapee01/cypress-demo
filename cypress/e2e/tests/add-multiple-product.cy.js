@@ -4,7 +4,7 @@ import { MultipleProduct } from "../pages/MultipleProducts";
 const loginPage = new LoginPage();
 const multipleProduct = new MultipleProduct();
 
-describe.only("Product Browse & Interaction", () => {
+describe("Product Browse & Interaction", () => {
   beforeEach(() => {
     loginPage.visit();
     loginPage.loginAsStandardUser();
