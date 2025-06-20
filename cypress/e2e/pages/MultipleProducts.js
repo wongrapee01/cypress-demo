@@ -9,6 +9,7 @@ export class MultipleProduct {
       "contain",
       "Remove"
     );
+    cy.get('[data-test="add-to-cart-sauce-labs-backpack"]');
   }
 
   // ➖ ลบสินค้าจากชื่อ
@@ -21,7 +22,7 @@ export class MultipleProduct {
     );
   }
 
-  // 🧮 ตรวจสอบ badge จำนวนสินค้าในตะกร้า
+  // ตรวจสอบ badge จำนวนสินค้าในตะกร้า
   verifyCartCount(expectedCount) {
     if (expectedCount === 0) {
       cy.get('[data-test="shopping-cart-badge"]').should("not.exist");
