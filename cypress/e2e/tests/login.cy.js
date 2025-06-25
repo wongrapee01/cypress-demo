@@ -1,4 +1,3 @@
-// cypress/e2e/login.cy.js
 import { LoginPage, SortProducts } from "../pages/LoginPage";
 import { InventoryPage } from "../pages/InventoryPage";
 
@@ -6,7 +5,7 @@ const loginPage = new LoginPage();
 const sortProducts = new SortProducts();
 const inventoryPage = new InventoryPage();
 
-describe("Login Functionality", () => {
+describe("Login Functionality", { tags: "@e2e" }, () => {
   beforeEach(() => {
     loginPage.visit();
   });
@@ -28,7 +27,7 @@ describe("Login Functionality", () => {
     );
   });
 
-  it("TC_003 Login User : Problem User", () => {
+  it("TC_003 Login User : Username & Password Incorrect", () => {
     loginPage.loginAsWrongPassword();
     cy.get('[data-test="error"]').should(
       "contain",
